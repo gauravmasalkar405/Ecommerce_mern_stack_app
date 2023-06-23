@@ -2,8 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
-import products from "./data/product.js";
+import productRoutes from "./router/product.js";
 import { connectToDatabase } from "./config/db.js";
+import { notFound, errorHandler } from "./middleware/errorHandler.js";
 
 // database connection
 connectToDatabase();
@@ -14,16 +15,15 @@ const app = express();
 // port
 const PORT = process.env.PORT || 5000;
 
+// cors
 app.use(cors());
 
-app.get("/api/products", (req, res) => {
-  res.json(products);
-});
+// routes
+app.use("/api/products", productRoutes);
 
-app.get("/api/products/:id", (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  res.json(product);
-});
+// error middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 //server
 app.listen(PORT, () => {
