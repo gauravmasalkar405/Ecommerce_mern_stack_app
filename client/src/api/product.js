@@ -1,3 +1,1 @@
-import { host } from "./host";
-
-export const productsRoute = `${host}/api/products`;
+export const productsRoute = `/api/products`;
