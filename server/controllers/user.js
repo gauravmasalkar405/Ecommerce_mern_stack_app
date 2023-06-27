@@ -64,12 +64,10 @@ export const registerUser = asyncHandler(async (req, res) => {
 
 // logging out....
 export const logoutUser = asyncHandler(async (req, res) => {
-  res.cookie("jwt", "", {
-    httpOnly: true,
-    expires: new Date(),
-  });
-
-  res.status(200).json({ message: "Logged out successfully" });
+  res
+    .clearCookie("jwt")
+    .status(200)
+    .json({ message: "Logged out successfully" });
 });
 
 // get user profile by id
