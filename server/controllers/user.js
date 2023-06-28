@@ -92,7 +92,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 // update user profile
 export const updateUserProfile = asyncHandler(async (req, res) => {
   // find user by id
-  const user = await User.findById(req.user._id);
+  const user = await User.findOne(req._id);
 
   // if user found
   if (user) {

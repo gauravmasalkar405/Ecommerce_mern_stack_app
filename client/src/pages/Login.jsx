@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../store/slices/user";
 import { setCredentials } from "../store/slices/auth";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState(""); // State variable to hold the email input value
@@ -34,7 +35,7 @@ const Login = () => {
 
     try {
       const res = await login({ email, password }).unwrap(); // Call the login mutation and handle the response
-      console.log(res);
+
       dispatch(setCredentials({ ...res })); // Set the user credentials in the Redux store
       navigate(redirect); // Redirect the user to the specified page after successful login
     } catch (error) {

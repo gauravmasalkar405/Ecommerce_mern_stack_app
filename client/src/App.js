@@ -10,6 +10,12 @@ import ProductPage from "./pages/ProductPage";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Shipping from "./pages/Shipping";
+import NotFound from "./components/NotFound";
+import Payment from "./pages/Payment";
+import PlaceOrder from "./pages/PlaceOrder";
+import Order from "./pages/Order";
+import ProfileScreen from "./pages/ProfileScreen";
 
 function App() {
   return (
@@ -23,6 +29,12 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/placeorder" element={<PlaceOrder />} />
+            <Route path="/order/:id" element={<Order />} />
+            <Route path="/profile" element={<ProfileScreen />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
       </main>

@@ -9,6 +9,8 @@ export const protect = asyncHandler(async (req, res, next) => {
   // get token from the cookie
   token = req.cookies.jwt;
 
+  console.log(req.cookies);
+
   if (token) {
     try {
       // verify token

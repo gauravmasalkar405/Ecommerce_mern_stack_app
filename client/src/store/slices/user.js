@@ -5,11 +5,10 @@ import { usersRoute } from "../../api/users";
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      // Define a mutation for login (POST request)
       query: (data) => ({
-        url: `${usersRoute}/login`, // Specify the URL for the login endpoint
-        method: "POST", // Specify the HTTP method as POST
-        body: data, // Pass the data as the request body
+        url: `${usersRoute}/login`,
+        method: "POST",
+        body: data,
       }),
     }),
 
@@ -27,9 +26,21 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
+
+    profile: builder.mutation({
+      query: (data) => ({
+        url: `${usersRoute}/profile`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
 // Extract the generated hooks for the login mutation
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
-  usersApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+  useProfileMutation,
+} = usersApiSlice;
