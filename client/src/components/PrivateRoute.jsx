@@ -1,7 +1,7 @@
 import { Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const PrivateRoute = ({ path, element }) => {
+const PrivateRoute = ({ element: Element, ...rest }) => {
   const { userInfo } = useSelector((state) => state.auth);
 
   if (!userInfo) {
@@ -10,7 +10,7 @@ const PrivateRoute = ({ path, element }) => {
   }
 
   // User is authenticated, render the component
-  return <Route path={path} element={element} />;
+  return <Route {...rest} element={<Element />} />;
 };
 
 export default PrivateRoute;

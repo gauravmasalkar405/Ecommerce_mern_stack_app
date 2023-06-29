@@ -1,4 +1,3 @@
-import React from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -16,6 +15,9 @@ import Payment from "./pages/Payment";
 import PlaceOrder from "./pages/PlaceOrder";
 import Order from "./pages/Order";
 import ProfileScreen from "./pages/ProfileScreen";
+import OrderList from "./pages/admin/OrderList";
+import ProductList from "./pages/admin/ProductList";
+import ProductEdit from "./pages/admin/ProductEdit";
 
 function App() {
   return (
@@ -34,6 +36,10 @@ function App() {
             <Route path="/placeorder" element={<PlaceOrder />} />
             <Route path="/order/:id" element={<Order />} />
             <Route path="/profile" element={<ProfileScreen />} />
+
+            <Route path="/admin/orderlist" element={<OrderList />} />
+            <Route path="/admin/productlist" element={<ProductList />} />
+            <Route path="/admin/product/:id/edit" element={<ProductEdit />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
