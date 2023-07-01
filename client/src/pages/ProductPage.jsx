@@ -15,6 +15,7 @@ import { useGetProductsDetailsQuery } from "../store/slices/products";
 import Message from "../components/Message";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/slices/cart";
+import { host } from "../api/host";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,11 @@ const ProductPage = () => {
           </Link>
           <Row>
             <Col md={5}>
-              <Image src={product.image} alt={product.name} fluid />
+              <Image
+                src={`${host}/${product.image}`}
+                alt={product.name}
+                fluid
+              />
             </Col>
             <Col md={4}>
               <ListGroup variant="flush">

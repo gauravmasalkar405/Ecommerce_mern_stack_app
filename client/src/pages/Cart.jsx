@@ -12,6 +12,7 @@ import {
 import { FaTrash } from "react-icons/fa";
 import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../store/slices/cart";
+import { host } from "../api/host";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -51,7 +52,12 @@ const Cart = () => {
                 <Row>
                   <Col md={2}>
                     {/* Item Image */}
-                    <Image src={item.image} alt={item.name} fluid rounded />
+                    <Image
+                      src={`${host}/${item.image}`}
+                      alt={item.name}
+                      fluid
+                      rounded
+                    />
                   </Col>
                   <Col md={3}>
                     {/* Item Name (with link to product details) */}

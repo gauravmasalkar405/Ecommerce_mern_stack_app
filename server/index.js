@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
@@ -8,6 +9,7 @@ import userRoutes from "./router/user.js";
 import orderRoutes from "./router/order.js";
 import { connectToDatabase } from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
+import uploadRoutes from "./router/upload.js";
 
 // database connection
 connectToDatabase();
@@ -43,11 +45,16 @@ const PORT = process.env.PORT || 5000;
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/upload", uploadRoutes);
 
 // paypal route ---> client id will be sent to user using this route
 app.get("/api/config/paypal", (req, res) =>
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
 );
+
+// making upload folder static
+const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 // error middlewares
 app.use(notFound);

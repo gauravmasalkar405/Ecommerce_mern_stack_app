@@ -1,5 +1,6 @@
 import { productsRoute } from "../../api/product";
 import { apiSlice } from "./api";
+import { uploadImageRoute } from "../../api/uploadImage";
 
 // Inject endpoints into the apiSlice
 export const productSlice = apiSlice.injectEndpoints({
@@ -37,6 +38,14 @@ export const productSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Products"],
     }),
+
+    uploadProductImage: builder.mutation({
+      query: (data) => ({
+        url: uploadImageRoute,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -46,4 +55,5 @@ export const {
   useGetProductsDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
+  useUploadProductImageMutation,
 } = productSlice;
