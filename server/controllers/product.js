@@ -1,10 +1,24 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Product from "../Models/product.js";
 
-// fetch all products
+// fetch all products , pagination implementation
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  res.json(products);
+  // define page size
+  const pageSize = 2;
+
+  // getting pageNumber from req
+  const page = Number(req.query.pageNumber) || 1;
+
+  // it will count all number of products available in mongo db
+  const count = await Product.countDocuments();
+
+  // it will give only products equal to pageSize and products for tha particular page
+  const products = await Product.find({})
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  // const products = await Product.find({});
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 // fetch products indivisually
@@ -68,15 +82,53 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 // delete product
 const deleteProduct = asyncHandler(async (req, res) => {
-  // get product by id
   const product = await Product.findById(req.params.id);
 
   if (product) {
     await Product.deleteOne({ _id: product._id });
-    res.json({ message: "Product removed" });
+    res.json({ message: "Product deleted successfully" });
   } else {
     res.status(404);
     throw new Error("Product not found");
+  }
+});
+
+// product review
+const createProductReview = asyncHandler(async (req, res) => {
+  const { user, rating, comment } = req.body;
+
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    // check if product is already reviewd by same user
+    const alreadyReviewd = product.reviews.find(
+      (review) => review.user.toString() === user._id.toString()
+    );
+    if (alreadyReviewd) {
+      res.status(400);
+      throw new Error("Product already reviewed");
+    }
+    const review = {
+      name: user.name,
+      rating: Number(rating),
+      comment: comment,
+      user: user._id,
+    };
+
+    product.reviews.push(review);
+
+    product.numReviews = product.reviews.length;
+
+    product.rating =
+      product.reviews.reduce((acc, review) => acc + review.rating, 0) /
+      product.reviews.length;
+
+    await product.save();
+
+    res.status(201).json({ message: "Review added" });
+  } else {
+    res.status(404);
+    throw new Error("Resource not found");
   }
 });
 
@@ -86,4 +138,5 @@ export {
   createProduct,
   updateProduct,
   deleteProduct,
+  createProductReview,
 };

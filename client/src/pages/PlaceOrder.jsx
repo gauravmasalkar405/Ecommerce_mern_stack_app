@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import Message from "../components/Message";
 import { useCreateOrderMutation } from "../store/slices/orders";
 import { clearCartItems } from "../store/slices/cart";
+import { host } from "../api/host";
 
 const PlaceOrder = () => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ const PlaceOrder = () => {
                         <Row>
                           <Col md={1}>
                             <Image
-                              src={item.image}
+                              src={`${host}/${item.image}`}
                               alt={item.name}
                               fluid
                               rounded

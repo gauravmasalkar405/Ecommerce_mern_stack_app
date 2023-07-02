@@ -6,6 +6,7 @@ import Message from "../../components/Message";
 import {
   useGetProductsQuery,
   useCreateProductMutation,
+  useDeleteProductMutation,
 } from "../../store/slices/products";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -21,8 +22,22 @@ const ProductList = () => {
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
 
+  // delete product mutation
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
+
   // delete product
-  const deleteHandler = async (id) => {};
+  const deleteHandler = async (id) => {
+    if (window.confirm("Are you sure?")) {
+      try {
+        const res = await deleteProduct(id);
+        toast.success(res?.data?.message);
+        refetch();
+      } catch (error) {
+        toast.error(error?.data?.message || error?.error);
+      }
+    }
+  };
 
   // create product handler
   const createProductHandler = async () => {
@@ -50,6 +65,7 @@ const ProductList = () => {
       </Row>
 
       {loadingCreate && <h1>...Loading</h1>}
+      {loadingDelete && <h1>...Loading Delete</h1>}
 
       {isLoading ? (
         <h2>...Loading</h2>

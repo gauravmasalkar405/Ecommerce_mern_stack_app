@@ -18,6 +18,8 @@ import ProfileScreen from "./pages/ProfileScreen";
 import OrderList from "./pages/admin/OrderList";
 import ProductList from "./pages/admin/ProductList";
 import ProductEdit from "./pages/admin/ProductEdit";
+import UserList from "./pages/admin/UserList";
+import UserEdit from "./pages/admin/UserEdit";
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
         <Container>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/page/:pageNumber" element={<Home />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
@@ -40,6 +43,8 @@ function App() {
             <Route path="/admin/orderlist" element={<OrderList />} />
             <Route path="/admin/productlist" element={<ProductList />} />
             <Route path="/admin/product/:id/edit" element={<ProductEdit />} />
+            <Route path="/admin/userlist" element={<UserList />} />
+            <Route path="admin/userlist/:id/edit" element={<UserEdit />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>

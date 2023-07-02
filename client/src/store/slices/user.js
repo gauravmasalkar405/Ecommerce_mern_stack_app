@@ -34,6 +34,36 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    getUsers: builder.query({
+      query: () => ({
+        url: usersRoute,
+      }),
+      providesTags: ["Users"],
+      keepUnusedDataFor: 5,
+    }),
+
+    deleteUser: builder.mutation({
+      query: (userId) => ({
+        url: `${usersRoute}/${userId}`,
+        method: "DELETE",
+      }),
+    }),
+
+    getUserDetails: builder.query({
+      query: (userId) => ({
+        url: `${usersRoute}/${userId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+
+    updateUser: builder.mutation({
+      query: (data) => ({
+        url: `${usersRoute}/${data.userId}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -43,4 +73,10 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useProfileMutation,
+  useGetUsersQuery,
+  useDeleteUserMutation,
+  useGetUserDetailsQuery,
+  useUpdateUserMutation,
 } = usersApiSlice;
+
+// if we dont user providetags we might have to relaod the page to update its content

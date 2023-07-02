@@ -1,11 +1,16 @@
 import { Col, Row } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../store/slices/products";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
 
 const Home = () => {
+  // page number form params
+  const { pageNumber } = useParams();
+
   // fetching products
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
 
   return (
     <>
@@ -19,8 +24,8 @@ const Home = () => {
         <>
           <h1>latest products</h1>
           <Row>
-            {products &&
-              products.map((product) => {
+            {data?.products &&
+              data?.products.map((product) => {
                 return (
                   <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                     <Product product={product} />
@@ -28,6 +33,7 @@ const Home = () => {
                 );
               })}
           </Row>
+          <Paginate pages={data?.pages} currentPage={data?.page}></Paginate>
         </>
       )}
     </>
