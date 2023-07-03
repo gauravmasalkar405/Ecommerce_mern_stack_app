@@ -2,7 +2,6 @@ import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import cors from "cors";
 import cookieParser from "cookie-parser";
 import productRoutes from "./router/product.js";
 import userRoutes from "./router/user.js";
