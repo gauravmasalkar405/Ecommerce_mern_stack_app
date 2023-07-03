@@ -9,6 +9,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${usersRoute}/login`,
         method: "POST",
         body: data,
+        credentials: "include",
       }),
     }),
 
@@ -24,6 +25,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${usersRoute}/logout`,
         method: "POST",
+        credentials: "include",
       }),
     }),
 
@@ -32,12 +34,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${usersRoute}/profile`,
         method: "PUT",
         body: data,
+        credentials: "include",
       }),
     }),
 
     getUsers: builder.query({
       query: () => ({
         url: usersRoute,
+        credentials: "include",
       }),
       providesTags: ["Users"],
       keepUnusedDataFor: 5,
@@ -47,12 +51,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       query: (userId) => ({
         url: `${usersRoute}/${userId}`,
         method: "DELETE",
+        credentials: "include",
       }),
     }),
 
     getUserDetails: builder.query({
       query: (userId) => ({
         url: `${usersRoute}/${userId}`,
+        credentials: "include",
       }),
       keepUnusedDataFor: 5,
     }),
@@ -62,6 +68,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${usersRoute}/${data.userId}`,
         method: "PUT",
         body: data,
+        credentials: "include",
       }),
     }),
   }),

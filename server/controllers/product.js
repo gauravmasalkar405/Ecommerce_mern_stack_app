@@ -9,11 +9,16 @@ const getProducts = asyncHandler(async (req, res) => {
   // getting pageNumber from req
   const page = Number(req.query.pageNumber) || 1;
 
+  // search keyword and mathching it with name in database using $refex query, $options query to make it case insensitive
+  const keyword = req.query.keyword
+    ? { name: { $regex: req.query.keyword, $options: "i" } }
+    : {};
+
   // it will count all number of products available in mongo db
-  const count = await Product.countDocuments();
+  const count = await Product.countDocuments({ ...keyword });
 
   // it will give only products equal to pageSize and products for tha particular page
-  const products = await Product.find({})
+  const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
@@ -132,6 +137,13 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 });
 
+// fetch products indivisually
+const getTopRatedProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+  res.json(products);
+});
+
 export {
   getProducts,
   getProductsById,
@@ -139,4 +151,5 @@ export {
   updateProduct,
   deleteProduct,
   createProductReview,
+  getTopRatedProducts,
 };

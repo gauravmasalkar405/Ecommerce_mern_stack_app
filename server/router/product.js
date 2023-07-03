@@ -7,24 +7,29 @@ import {
   updateProduct,
   deleteProduct,
   createProductReview,
+  getTopRatedProducts,
 } from "../controllers/product.js";
+import { protect, admin } from "../middleware/authMiddleware.js";
+
+// top rated products
+router.get("/top", getTopRatedProducts);
 
 // get products route
 router.get("/", getProducts);
 
 // create product
-router.post("/:id", createProduct);
+router.post("/:id", protect, admin, createProduct);
 
 // get product by id route
 router.get("/:id", getProductsById);
 
 // update product
-router.put("/:id", updateProduct);
+router.put("/:id", protect, admin, updateProduct);
 
 // delete product by id
-router.delete("/:id", deleteProduct);
+router.delete("/:id", protect, admin, deleteProduct);
 
 // create product review
-router.route("/:id/review").post(createProductReview);
+router.route("/:id/review").post(protect, admin, createProductReview);
 
 export default router;

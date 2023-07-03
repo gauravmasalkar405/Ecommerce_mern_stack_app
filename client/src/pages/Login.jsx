@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../store/slices/user";
 import { setCredentials } from "../store/slices/auth";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState(""); // State variable to hold the email input value
@@ -35,6 +34,36 @@ const Login = () => {
 
     try {
       const res = await login({ email, password }).unwrap(); // Call the login mutation and handle the response
+
+      dispatch(setCredentials({ ...res })); // Set the user credentials in the Redux store
+      navigate(redirect); // Redirect the user to the specified page after successful login
+    } catch (error) {
+      toast.error(error?.data?.message || error?.error); // Display an error message using toast
+    }
+  };
+
+  // test customer login
+  const testCustomerLoginHandler = async () => {
+    try {
+      const res = await login({
+        email: "rock@gmail.com",
+        password: "123456",
+      }).unwrap(); // Call the login mutation and handle the response
+
+      dispatch(setCredentials({ ...res })); // Set the user credentials in the Redux store
+      navigate(redirect); // Redirect the user to the specified page after successful login
+    } catch (error) {
+      toast.error(error?.data?.message || error?.error); // Display an error message using toast
+    }
+  };
+
+  // test admin login
+  const testAdminLoginHandler = async () => {
+    try {
+      const res = await login({
+        email: "admin@gmail.com",
+        password: "123456",
+      }).unwrap(); // Call the login mutation and handle the response
 
       dispatch(setCredentials({ ...res })); // Set the user credentials in the Redux store
       navigate(redirect); // Redirect the user to the specified page after successful login
@@ -81,6 +110,28 @@ const Login = () => {
         {/* Loading indicator */}
         {isLoading && <h3>...Loading</h3>}
       </Form>
+
+      {/* test customer login button */}
+      <Button
+        type="submit"
+        variant="primary"
+        className="mt-3"
+        disabled={isLoading}
+        onClick={testCustomerLoginHandler}
+      >
+        Test Customer Login
+      </Button>
+
+      {/* test admin login button */}
+      <Button
+        type="submit"
+        variant="primary"
+        className="mt-3 mx-3"
+        disabled={isLoading}
+        onClick={testAdminLoginHandler}
+      >
+        Test Admin Login
+      </Button>
 
       {/* Link to registration page */}
       <Row className="py-3">

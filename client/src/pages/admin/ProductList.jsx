@@ -10,13 +10,19 @@ import {
 } from "../../store/slices/products";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import Paginate from "../../components/Paginate";
 
 const ProductList = () => {
+  // page number
+  const { pageNumber } = useParams();
+
   // user info from state
   const { userInfo } = useSelector((state) => state.auth);
 
   // get products
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    pageNumber,
+  });
 
   // create products
   const [createProduct, { isLoading: loadingCreate }] =
@@ -84,7 +90,7 @@ const ProductList = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {data.products.map((product) => (
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
@@ -110,6 +116,7 @@ const ProductList = () => {
           </tbody>
         </Table>
       )}
+      <Paginate pages={data?.pages} currentPage={data?.page} isAdmin={true} />
     </>
   );
 };

@@ -8,11 +8,13 @@ export const productSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Define the "getProducts" endpoint
     getProducts: builder.query({
-      query: ({ pageNumber }) => ({
+      query: ({ keyword, pageNumber }) => ({
         url: productsRoute, // Set the URL for the "getProducts" endpoint
         params: {
+          keyword,
           pageNumber,
         },
+        credentials: "include",
       }),
       providesTags: ["Products"],
       keepUnusedDataFor: 5, // Keep the data for 5 minutes even if it's not actively used
@@ -21,6 +23,7 @@ export const productSlice = apiSlice.injectEndpoints({
     getProductsDetails: builder.query({
       query: (productId) => ({
         url: `${productsRoute}/${productId}`,
+        credentials: "include",
       }),
       keepUnusedDataFor: 5,
     }),
@@ -29,6 +32,7 @@ export const productSlice = apiSlice.injectEndpoints({
       query: (userId) => ({
         url: `${productsRoute}/${userId}`,
         method: "POST",
+        credentials: "include",
       }),
       invalidatesTags: ["Product"],
     }),
@@ -38,6 +42,7 @@ export const productSlice = apiSlice.injectEndpoints({
         url: `${productsRoute}/${data.productId}`,
         method: "PUT",
         body: data,
+        credentials: "include",
       }),
       invalidatesTags: ["Products"],
     }),
@@ -47,6 +52,7 @@ export const productSlice = apiSlice.injectEndpoints({
         url: uploadImageRoute,
         method: "POST",
         body: data,
+        credentials: "include",
       }),
     }),
 
@@ -54,6 +60,7 @@ export const productSlice = apiSlice.injectEndpoints({
       query: (productId) => ({
         url: `${productsRoute}/${productId}`,
         method: "DELETE",
+        credentials: "include",
       }),
     }),
 
@@ -65,6 +72,13 @@ export const productSlice = apiSlice.injectEndpoints({
       }),
     }),
     invalidatesTags: ["Product"],
+
+    getTopProducts: builder.query({
+      query: () => ({
+        url: `${productsRoute}/top`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -77,4 +91,5 @@ export const {
   useUploadProductImageMutation,
   useDeleteProductMutation,
   useCreateReviewMutation,
+  useGetTopProductsQuery,
 } = productSlice;

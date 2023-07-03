@@ -11,6 +11,7 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { host } from "../api/host";
 
 const Order = () => {
   // get orderId from useParams
@@ -172,7 +173,12 @@ const Order = () => {
                   <ListGroup.Item key={index}>
                     <Row>
                       <Col md={1}>
-                        <Image src={item.image} alt={item.name} fluid rounded />
+                        <Image
+                          src={`${host}/${item.image}`}
+                          alt={item.name}
+                          fluid
+                          rounded
+                        />
                       </Col>
                       <Col md={4}>
                         {item.qty} x ${item.price} = ${item.qty * item.price}
