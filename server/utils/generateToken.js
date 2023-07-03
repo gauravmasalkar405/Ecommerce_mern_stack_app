@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
+
 
 const generateToken = (res, userId) => {
   // generate token
@@ -10,7 +9,6 @@ const generateToken = (res, userId) => {
 
   // Set JWT as an HTTP-Only cookie
   res.cookie("jwt", token, {
-    domain: "papaya-flan-71f350.netlify.app",
     httpOnly: true, // can not be accessed by javascript on client side
     secure: process.env.NODE_ENV !== "developement", // secure flag will be active for production
     sameSite: "strict", // Setting it to "strict" ensures that the cookie is only sent in requests originating from the same site.
