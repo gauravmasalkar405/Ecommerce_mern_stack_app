@@ -19,7 +19,8 @@ const Payment = () => {
     if (!shippingAddress) {
       navigate("/shipping");
     }
-  }, [shippingAddress, navigate]);
+    console.log(paymentMethod);
+  }, [shippingAddress, navigate, paymentMethod]);
 
   const submitHandler = (e) => {
     e.preventDefault();

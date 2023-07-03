@@ -42,10 +42,8 @@ const ProductPage = () => {
   } = useGetProductsDetailsQuery(productId);
 
   // create review mutation
-  const [
-    createReview,
-    { isLoading: loadingProductReview, error: reviewError },
-  ] = useCreateReviewMutation();
+  const [createReview, { isLoading: loadingProductReview }] =
+    useCreateReviewMutation();
 
   // adding item to cart
   const addToCartHandler = () => {

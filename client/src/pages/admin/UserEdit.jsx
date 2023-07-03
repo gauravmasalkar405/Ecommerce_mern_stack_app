@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import Message from "../../components/Message";
 import FormContainer from "../../components/FormContainer";
@@ -10,8 +10,6 @@ import {
 } from "../../store/slices/user";
 
 const UserEdit = () => {
-  const navigate = useNavigate();
-
   // product id
   const { id: userId } = useParams();
 
