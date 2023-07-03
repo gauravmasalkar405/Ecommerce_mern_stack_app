@@ -35,6 +35,14 @@ function App() {
               path="/search/:keyword/page/:pageNumber"
               element={<Home />}
             />
+            <Route
+              path="/search/:keyword/product/:id"
+              element={<ProductPage />}
+            />
+            <Route
+              path="/page/:pageNumber/product/:id"
+              element={<ProductPage />}
+            />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />

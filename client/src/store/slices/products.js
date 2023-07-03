@@ -69,6 +69,7 @@ export const productSlice = apiSlice.injectEndpoints({
         url: `${productsRoute}/${data.productId}/review`,
         method: "POST",
         body: data,
+        credentials: "include",
       }),
     }),
     invalidatesTags: ["Product"],
